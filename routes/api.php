@@ -27,9 +27,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/places', [PlaceController::class, 'index']);
-    Route::get('/places/{place}', [PlaceController::class, 'show']);
-    Route::post('/places', [PlaceController::class, 'store']);
-    Route::put('/places/{place}', [PlaceController::class, 'update']);
-    Route::delete('/places/{place}', [PlaceController::class, 'destroy']);
+    Route::get('/places', [PlaceController::class, 'index'])->name('places.index');
+    Route::get('/places/{place}', [PlaceController::class, 'show'])->name('places.show');
+    Route::post('/places', [PlaceController::class, 'store'])->name('places.store');
+    Route::put('/places/{place}', [PlaceController::class, 'update'])->name('places.update');
+    Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');
 });
