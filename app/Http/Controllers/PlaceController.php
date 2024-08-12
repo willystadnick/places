@@ -10,7 +10,7 @@ class PlaceController extends Controller
 {
     public function index()
     {
-        $places = Place::all();
+        $places = Place::paginate(15);
         return PlaceResource::collection($places);
     }
 
@@ -36,11 +36,12 @@ class PlaceController extends Controller
     public function update(StorePlaceRequest $request, Place $place)
     {
         $validatedData = $request->validated();
-
-        $slug = Str::slug($validatedData['name']);
-
-        while (Place::where('slug', $slug)->where('id', '!=', $place->id)->exists()) {
-            $slug = Str::slug($validatedData['name']) . '-' . Str::random(5);
+      
+        if($validatedData['name'] !== $place->name){
+            $slug = Str::slug($validatedData['name']);
+            while (Place::where('slug', $slug)->where('id', '!=', $place->id)->exists()) {
+                $slug = Str::slug($validatedData['name']) . '-' . Str::random(5);
+            }    
         }
 
         $place->update(array_merge($validatedData, ['slug' => $slug]));
